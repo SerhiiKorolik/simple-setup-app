@@ -1,0 +1,57 @@
+replicaCount: 1
+
+image:
+  repository: 451442069649.dkr.ecr.us-east-1.amazonaws.com/time-app
+  pullPolicy: Always
+  tag: latest
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::451442069649:role/access-power-user
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  name: python-time-app
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  name: time-app-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+  paths:
+  - "/"
+  - "/health"
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

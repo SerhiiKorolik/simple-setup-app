@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Time Zones</title>
+</head>
+<body>
+    <h1>Time Zones</h1>
+    {% for city, time in time_data.items() %}
+        <p>{{ city }}: {{ time.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    {% endfor %}
+</body>
+</html>
